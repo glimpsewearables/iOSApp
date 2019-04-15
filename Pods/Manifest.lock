@@ -1,0 +1,34 @@
+PODS:
+  - ChameleonFramework/Default (2.1.0)
+  - ChameleonFramework/Swift (2.1.0):
+    - ChameleonFramework/Default
+  - Hero (1.4.0)
+  - MobilePlayer (1.2.0)
+
+DEPENDENCIES:
+  - ChameleonFramework/Swift (from `https://github.com/ViccAlexander/Chameleon.git`)
+  - Hero
+  - MobilePlayer
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Hero
+    - MobilePlayer
+
+EXTERNAL SOURCES:
+  ChameleonFramework:
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+CHECKOUT OPTIONS:
+  ChameleonFramework:
+    :commit: 6dd284bde21ea2e7f9fd89bc36f40df16e16369d
+    :git: https://github.com/ViccAlexander/Chameleon.git
+
+SPEC CHECKSUMS:
+  ChameleonFramework: d21a3cc247abfe5e37609a283a8238b03575cf64
+  Hero: bac92350d7201a1a940003e0767c7b52ce7c99a1
+  MobilePlayer: 069b13482499f14c25b6ce53f63a91e17975b073
+
+PODFILE CHECKSUM: 5b40d962d4d8ee75bb011db18c0786309f105ece
+
+COCOAPODS: 1.5.3
