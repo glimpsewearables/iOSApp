@@ -23,6 +23,7 @@ class EventCell : UITableViewCell {
         addSubview(date)
         addSubview(name)
         addSubview(thumbnailImageView)
+        addSubview(count)
         
         NSLayoutConstraint.activate([
             //thumbnailImageView.rightAnchor.constraint(equalTo: rightAnchor),
@@ -35,8 +36,11 @@ class EventCell : UITableViewCell {
             name.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             
             date.leftAnchor.constraint(equalTo: leftAnchor, constant: 18),
-            date.bottomAnchor.constraint(equalTo: bottomAnchor)
+            date.bottomAnchor.constraint(equalTo: bottomAnchor),
             //date.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 24),
+            
+            count.rightAnchor.constraint(equalTo: self.rightAnchor),
+            count.bottomAnchor.constraint(equalTo: bottomAnchor),
         ])
     }
     
@@ -61,6 +65,13 @@ class EventCell : UITableViewCell {
         text.translatesAutoresizingMaskIntoConstraints = false
         text.textColor = .white
         return text
+    }()
+    
+    let count: UILabel = {
+        let counts = UILabel()
+        counts.translatesAutoresizingMaskIntoConstraints = false
+        counts.textColor = .white
+        return counts
     }()
     
     required init?(coder aDecoder: NSCoder) {

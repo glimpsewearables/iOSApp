@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		26D544549C125A24C6DF1BA2 /* Pods_youtubeTesting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AD2352562262995176494016 /* Pods_youtubeTesting.framework */; };
 		2949FE08CB261D1452F4D38D /* Pods_GlimpseApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EB3719BFAC3028F8B701668F /* Pods_GlimpseApp.framework */; };
 		A90C439722003FEB00D6BCA5 /* EventController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90C439622003FEB00D6BCA5 /* EventController.swift */; };
 		A90C4399220041D800D6BCA5 /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90C4398220041D800D6BCA5 /* EventCell.swift */; };
@@ -84,7 +83,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26D544549C125A24C6DF1BA2 /* Pods_youtubeTesting.framework in Frameworks */,
 				2949FE08CB261D1452F4D38D /* Pods_GlimpseApp.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -11,7 +11,6 @@ import MediaPlayer
 
 /// A view controller for playing media content.
 open class MobilePlayerViewController: MPMoviePlayerViewController {
-
   // MARK: Playback State
 
   /// Playback state.
@@ -277,18 +276,12 @@ open class MobilePlayerViewController: MPMoviePlayerViewController {
   ///  - animated: If `true`, the disappearance of the view is being animated.
   open override func viewWillDisappear(_ animated: Bool) {
     super.viewWillDisappear(animated)
-    
-    if (self.isMovingFromParent) {
-        UIDevice.current.setValue(Int(UIInterfaceOrientation.portrait.rawValue), forKey: "orientation")
-    }
     stop()
     // Restore status bar appearance.
     guard let previousStatusBarHiddenValue = previousStatusBarHiddenValue else { return }
     UIApplication.shared.isStatusBarHidden = previousStatusBarHiddenValue
     setNeedsStatusBarAppearanceUpdate()
   }
-    
-    @objc func canRotate() -> Void {}
 
   // MARK: Deinitialization
 
