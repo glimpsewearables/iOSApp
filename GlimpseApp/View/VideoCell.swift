@@ -14,15 +14,12 @@ import AVKit
 class VideoCell: UITableViewCell {
     
     
-    var video: Video? {
-        didSet {
-           // thumbnailImageView.image = getThumbnailImage(forUrl: URL(string: (video?.link)!)!)
-        }
-    }
+    var video: Video?
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
+        setupThumbnail()
     }
     
     let thumbnailImageView: UIImageView = {
@@ -39,7 +36,11 @@ class VideoCell: UITableViewCell {
         return dateLabel
     }()
     
-    
+    func setupThumbnail() {
+        let videoURL = URL(string: (video?.link)!)
+        let thumbnailImage = videoURL!.createVideoThumbnail()
+        thumbnailImageView.image = thumbnailImage
+    }
     
     func setupViews() {
         addSubview(thumbnailImageView)
@@ -65,7 +66,7 @@ class VideoCell: UITableViewCell {
     func getThumbnailImage(forUrl url: URL) -> UIImage? {
         let asset: AVAsset = AVAsset(url: url)
         let imageGenerator = AVAssetImageGenerator(asset: asset)
-
+        
         do {
             let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60) , actualTime: nil)
             return UIImage(cgImage: thumbnailImage)

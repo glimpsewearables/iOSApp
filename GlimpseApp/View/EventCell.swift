@@ -11,12 +11,13 @@ import UIKit
 
 class EventCell : UITableViewCell {
     
-    var event : Event? 
+    var event : UserEvent?
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
+        setupThumbnail()
     }
     
     func setupViews() {
@@ -33,10 +34,10 @@ class EventCell : UITableViewCell {
             thumbnailImageView.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.width * 9 / 16),
             
             name.leftAnchor.constraint(equalTo: leftAnchor, constant: 12),
-            name.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
+            name.bottomAnchor.constraint(equalTo: bottomAnchor),
             
-            date.leftAnchor.constraint(equalTo: leftAnchor, constant: 18),
-            date.bottomAnchor.constraint(equalTo: bottomAnchor),
+            date.rightAnchor.constraint(equalTo: self.rightAnchor),
+            date.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -16),
             //date.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 24),
             
             count.rightAnchor.constraint(equalTo: self.rightAnchor),
@@ -44,8 +45,14 @@ class EventCell : UITableViewCell {
         ])
     }
     
-    let thumbnailImageView: UIImageView = {
-        let imageView = UIImageView()
+    func setupThumbnail() {
+        if let thumbnailImageUrl = event?.headerImage {
+            thumbnailImageView.cacheImage(urlString: thumbnailImageUrl)
+        }
+    }
+    
+    let thumbnailImageView: CustomImageView = {
+        let imageView = CustomImageView()
         imageView.backgroundColor = UIColor.black
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.isUserInteractionEnabled = true
@@ -55,7 +62,7 @@ class EventCell : UITableViewCell {
     let name: UILabel = {
         let eventName = UILabel()
         eventName.translatesAutoresizingMaskIntoConstraints = false
-        eventName.font = UIFont.boldSystemFont(ofSize: 18)
+        eventName.font = UIFont.boldSystemFont(ofSize: 30)
         eventName.textColor = .white
         return eventName
     }()
@@ -79,3 +86,5 @@ class EventCell : UITableViewCell {
     }
     
 }
+
+

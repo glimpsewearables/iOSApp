@@ -26,9 +26,10 @@ class YourMediaController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchMedia()
-        setupGallery()
         setupNav()
         configureHeaderView()
+        setupGallery()
+        
     }
     
     override open var shouldAutorotate: Bool {
@@ -55,7 +56,7 @@ class YourMediaController : UIViewController {
     }
     
     func configureHeaderView() {
-        if (featuredContent.count == 0) { //CHANGE for actual functionality
+        if (featuredContent.count != 0) { //CHANGE for actual functionality
             let headerContainer = UIView(frame: CGRect(x: 0, y: -300, width: galleryView.frame.width, height: 300))
             
             let momentLabel = UILabel(frame: CGRect(x: -3, y: 257, width: view.frame.width + 6, height: 40))
@@ -85,11 +86,11 @@ class YourMediaController : UIViewController {
             galleryView.addSubview(headerContainer)
             galleryView.contentInset.top = 300
         } else {
-            let momentLabel = UILabel(frame: CGRect(x: -3, y: -43, width: view.frame.width + 6, height: 40))
+            let momentLabel = UILabel(frame: CGRect(x: -3, y: -40, width: view.frame.width + 6, height: 40))
             momentLabel.text = "  Your Moments"
-            momentLabel.textColor = UIColor.white
+            momentLabel.textColor = .white
             momentLabel.font = UIFont.boldSystemFont(ofSize: 25)
-            momentLabel.backgroundColor = .red
+            momentLabel.backgroundColor = FlatGreenDark()
             //momentLabel.layer.borderWidth = 2.0
             galleryView.addSubview(momentLabel)
             galleryView.contentInset.top = 40
@@ -127,7 +128,24 @@ extension YourMediaController : UICollectionViewDataSource, UICollectionViewDele
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GalleryCell
             let video = videos[videos.count - 1 - indexPath.row]
-            cell.thumbnailImageView.image = getThumbnailImage(forUrl: URL(string: video.link!)!)
+            cell.video = video
+            let videoURL = URL(string: video.link!)
+            let thumbnailImage = videoURL!.createVideoThumbnail()
+            cell.thumbnailImageView.image = thumbnailImage
+            //cell.thumbnailImageView.image = getThumbnailImage(forUrl: URL(string: video.link!)!)
+//            let type = video.link!.suffix(3)
+//            if (type == "mp4") {
+//                cell.thumbnailImageView.image = getThumbnailImage(forUrl: URL(string: video.link!)!)
+//            } else {
+//                let url = URL(string: video.link!)
+//                do {
+//                    let data = try Data(contentsOf: url!)
+//                    let image = UIImage(data: data)
+//                    cell.thumbnailImageView.image = image
+//                }catch let err {
+//                    print("Error : \(err.localizedDescription)")
+//                }
+//            }
             return cell
         }
     }
@@ -138,13 +156,18 @@ extension YourMediaController : UICollectionViewDataSource, UICollectionViewDele
         } else {
             print("User tapped on item \(indexPath.row)")
             let selectedVideo = videos[videos.count - 1 - indexPath.row]
+            let type = selectedVideo.link!.suffix(3)
+            if (type == "mp4") {
             //let videoController = VideoController()
             //videoController.videoLink = selectedVideo.link
             //self.navigationController?.pushViewController(videoController, animated: true)
             let playerVC = MobilePlayerViewController(contentURL: URL(string: selectedVideo.link!)!)
-            playerVC.title = "Vanilla Player - \(selectedVideo.dateTime)"
+            playerVC.title = "\(eventName) - \(selectedVideo.dateTime)"
             playerVC.activityItems = [URL(string: selectedVideo.link!)!] // Check the documentation for more information.
             presentMoviePlayerViewControllerAnimated(playerVC)
+            } else {
+                print("tapped on picture")
+            }
         }
     }
     
@@ -222,8 +245,10 @@ extension YourMediaController : UICollectionViewDataSource, UICollectionViewDele
         let imageGenerator = AVAssetImageGenerator(asset: asset)
         
         do {
+            //var thumbnailImage = CustomImageView()
             let thumbnailImage = try imageGenerator.copyCGImage(at: CMTimeMake(value: 1, timescale: 60) , actualTime: nil)
             return UIImage(cgImage: thumbnailImage)
+            
         } catch let error {
             print(error)
         }

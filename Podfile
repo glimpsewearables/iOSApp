@@ -9,6 +9,7 @@ target 'GlimpseApp' do
   pod 'Hero'
   pod 'ChameleonFramework/Swift', :git => 'https://github.com/ViccAlexander/Chameleon.git'
   pod 'MobilePlayer'
+  pod 'SVProgressHUD'
 
   
 end

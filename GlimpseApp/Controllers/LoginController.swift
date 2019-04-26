@@ -22,10 +22,12 @@ class LoginController : UIViewController, UITextFieldDelegate {
     }
     
     @objc func buttonAction(sender: UIButton!) {
+        //if empty prompt user for id
         self.userId = idTextField.text
         print("Button tapped")
-        print(userId!)
-        let destinationView = EventController()
+        print("user \(userId!)")
+        //let destinationView = EventController()
+        let destinationView = HomeController()
         destinationView.userId = userId!
         self.navigationController?.pushViewController(destinationView, animated: true)
         

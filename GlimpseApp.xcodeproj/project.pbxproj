@@ -13,6 +13,9 @@
 		A90C439E2200470600D6BCA5 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90C439D2200470600D6BCA5 /* Event.swift */; };
 		A90C43A02200478900D6BCA5 /* Video.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90C439F2200478900D6BCA5 /* Video.swift */; };
 		A9616504222F605100996F1F /* GalleryCollectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9616503222F605100996F1F /* GalleryCollectionView.swift */; };
+		A9A1E43422728F260064DFE2 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1E43322728F260064DFE2 /* HomeController.swift */; };
+		A9A1E4362272961E0064DFE2 /* UserEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1E4352272961E0064DFE2 /* UserEvent.swift */; };
+		A9A1E43A2272AB130064DFE2 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A1E4392272AB130064DFE2 /* Extensions.swift */; };
 		A9CED2F221FED4870095BD4B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CED2F121FED4870095BD4B /* AppDelegate.swift */; };
 		A9CED2F721FED4870095BD4B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A9CED2F521FED4870095BD4B /* Main.storyboard */; };
 		A9CED2F921FED4880095BD4B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CED2F821FED4880095BD4B /* Assets.xcassets */; };
@@ -54,6 +57,9 @@
 		A90C439D2200470600D6BCA5 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		A90C439F2200478900D6BCA5 /* Video.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Video.swift; sourceTree = "<group>"; };
 		A9616503222F605100996F1F /* GalleryCollectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GalleryCollectionView.swift; sourceTree = "<group>"; };
+		A9A1E43322728F260064DFE2 /* HomeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeController.swift; sourceTree = "<group>"; };
+		A9A1E4352272961E0064DFE2 /* UserEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserEvent.swift; sourceTree = "<group>"; };
+		A9A1E4392272AB130064DFE2 /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		A9CED2EE21FED4870095BD4B /* GlimpseApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GlimpseApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9CED2F121FED4870095BD4B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		A9CED2F621FED4870095BD4B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -116,6 +122,7 @@
 		A907613321FF082C00AF672C /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				A9A1E4392272AB130064DFE2 /* Extensions.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -124,10 +131,11 @@
 			isa = PBXGroup;
 			children = (
 				A9FE7D1C22051EC1001549D5 /* LoginController.swift */,
-				A90C439622003FEB00D6BCA5 /* EventController.swift */,
-				A9FE7D182204EF6C001549D5 /* MediaController.swift */,
+				A9A1E43322728F260064DFE2 /* HomeController.swift */,
 				A9D6CED62245D6900039584F /* YourMediaController.swift */,
 				A9FE7D1A2205034D001549D5 /* VideoController.swift */,
+				A90C439622003FEB00D6BCA5 /* EventController.swift */,
+				A9FE7D182204EF6C001549D5 /* MediaController.swift */,
 				A9E6E80F222CA1E10043E956 /* MediaCollectionView.swift */,
 				A9E6E817222DCC960043E956 /* FeaturedController.swift */,
 				A9E6E819222DE5360043E956 /* TestController.swift */,
@@ -141,6 +149,7 @@
 			children = (
 				A90C439D2200470600D6BCA5 /* Event.swift */,
 				A90C439F2200478900D6BCA5 /* Video.swift */,
+				A9A1E4352272961E0064DFE2 /* UserEvent.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -344,6 +353,7 @@
 				"${BUILT_PRODUCTS_DIR}/ChameleonFramework/ChameleonFramework.framework",
 				"${BUILT_PRODUCTS_DIR}/Hero/Hero.framework",
 				"${BUILT_PRODUCTS_DIR}/MobilePlayer/MobilePlayer.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
@@ -352,6 +362,7 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/ChameleonFramework.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Hero.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MobilePlayer.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -392,9 +403,12 @@
 				A90C439E2200470600D6BCA5 /* Event.swift in Sources */,
 				A9616504222F605100996F1F /* GalleryCollectionView.swift in Sources */,
 				A90C439722003FEB00D6BCA5 /* EventController.swift in Sources */,
+				A9A1E4362272961E0064DFE2 /* UserEvent.swift in Sources */,
 				A9FE7D192204EF6C001549D5 /* MediaController.swift in Sources */,
+				A9A1E43A2272AB130064DFE2 /* Extensions.swift in Sources */,
 				A90C43A02200478900D6BCA5 /* Video.swift in Sources */,
 				A9D6CED72245D6900039584F /* YourMediaController.swift in Sources */,
+				A9A1E43422728F260064DFE2 /* HomeController.swift in Sources */,
 				A9FE7D1D22051EC1001549D5 /* LoginController.swift in Sources */,
 				A9FE7D1B2205034D001549D5 /* VideoController.swift in Sources */,
 				A9CED32421FEF1B40095BD4B /* VideoCell.swift in Sources */,

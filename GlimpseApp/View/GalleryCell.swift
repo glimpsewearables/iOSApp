@@ -21,6 +21,7 @@ class GalleryCell: UICollectionViewCell {
         super.init(frame: frame)
         //backgroundColor = UIColor.blue
         setupViews()
+        //setupThumbnail()
     }
     
     func setupViews() {
@@ -43,6 +44,12 @@ class GalleryCell: UICollectionViewCell {
 
         ])
     }
+    
+//    func setupThumbnail() {
+//        let videoURL = URL(string: (video?.link!)!)
+//        let thumbnailImage = videoURL!.createVideoThumbnail()
+//        thumbnailImageView.image = thumbnailImage
+//    }
     
     let thumbnailImageView: UIImageView = {
         let imageView = UIImageView()

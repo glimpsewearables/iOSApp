@@ -1,6 +1,5 @@
 //
-//  EventController.swift
-//  youtubeTesting
+//  HomeController.swift
 //
 //  Created by Kelson Flint on 1/29/19.
 //  Copyright © 2019 Kelson Flint. All rights reserved.
@@ -11,15 +10,15 @@ import UIKit
 import ChameleonFramework
 
 
-class EventController : UITableViewController {
+class HomeController : UITableViewController {
     
     var userId : String?
-    var events = [Event]() //array of media data
-    var meta = [Meta]() //meta data
+    var events = [UserEvent]() //array of media data
+    var user : User!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Events"
+        navigationItem.title = "Your Events"
         
         fetchMedia()
         tableView.backgroundColor = FlatGreen()
@@ -28,7 +27,7 @@ class EventController : UITableViewController {
         tableView.register(EventCell.self, forCellReuseIdentifier: "cellId")
         
         let navTitle = UILabel(frame: CGRect(x:0, y:0, width:UIScreen.main.bounds.width - 32, height:70))
-        navTitle.text = "Events"
+        navTitle.text = "Your Events"
         navTitle.textColor = UIColor.white
         navTitle.font = UIFont.boldSystemFont(ofSize: 35)
         navigationItem.titleView = navTitle
@@ -47,21 +46,23 @@ class EventController : UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellId", for: indexPath) as! EventCell
         let event = events[indexPath.row]
+        cell.event = event
         cell.name.text = event.name
         cell.date.text = event.startDate
         cell.backgroundColor = FlatGreen()
+        cell.count.text = "\(String(event.numVideos!)) videos"
         //cell.textLabel?.text = event.name
         //cell.detailTextLabel?.text = event.startDate
+        cell.setupThumbnail()
         
-        
-        let url = URL(string: (event.headerImage)!)
-        cell.thumbnailImageView.image = nil
-        DispatchQueue.global().async {
-            let data = try? Data(contentsOf: url!)
-            DispatchQueue.main.async {
-                cell.thumbnailImageView.image = UIImage(data: data!)
-            }
-        }
+//        let url = URL(string: (event.headerImage)!)
+//
+//        DispatchQueue.global().async {
+//            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
+//            DispatchQueue.main.async {
+//                cell.thumbnailImageView.image = UIImage(data: data!)
+//            }
+//        }
         return cell
     }
     
@@ -70,24 +71,20 @@ class EventController : UITableViewController {
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedEvent = events[indexPath.row]
-       //let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-        //let destinationView = MediaCollectionView()
-//        let destinationView = FeaturedController()
-        //let destinationView = TestController()
-        
-       // let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+        //let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
+        //let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
         //let destinationView = FeaturedController.init(collectionViewLayout:layout )
         //let destinationView = MediaController()
         let destinationView = YourMediaController()
         
-        destinationView.eventId = indexPath.row + 1
+        destinationView.eventId = selectedEvent.eventId
         destinationView.eventName = selectedEvent.name!
         destinationView.userId = userId
         self.navigationController?.pushViewController(destinationView, animated: true)
     }
     
     fileprivate func fetchMedia() {
-        let urlString = "https://api.glimpsewearables.com/api/event/"
+        let urlString = "https://api.glimpsewearables.com/media/getSpecificUser/\(userId!)"
         guard let url = URL(string: urlString) else {return}
         URLSession.shared.dataTask(with: url) { (data, _, err) in
             /*
@@ -104,16 +101,15 @@ class EventController : UITableViewController {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let json = try decoder.decode(EventJson.self, from: data)
-                self.meta = [json.meta!]
-                self.events = json.objects!
+                let json = try decoder.decode(UserEventJson.self, from: data)
+                let allEvents = json.events!
+                self.events = allEvents.allEvents!
+                self.user = json.user!
                 self.tableView.reloadData()
             } catch let jsonErr {
                 print("Failed to decode: ", jsonErr)
             }
-            print(self.meta)
-            print(self.events)
-            print(self.events.count)
+            print("\(self.events.count) events")
             print("Parsed Events Properly")
             }.resume()
     }
