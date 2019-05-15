@@ -14,6 +14,7 @@ class MediaController: UITableViewController {
     
     var userId : String!
     var videos = [Video]() //array of media data
+    var eventData : thisEvent?
     var eventId : Int!
     var eventName: String?
     var galleryView : UICollectionView!
@@ -69,7 +70,7 @@ class MediaController: UITableViewController {
     
     fileprivate func fetchMedia() {
         let id: String = String(eventId)
-        let urlString = "https://api.glimpsewearables.com/media/getAllVideosUserEvent/\(userId!)/\(id)"
+        let urlString = "https://api.glimpsewearables.com/media/getSpecificEvent/\(id)"
         print(urlString)
         guard let url = URL(string: urlString) else {return}
         URLSession.shared.dataTask(with: url) { (data, _, err) in
@@ -88,9 +89,10 @@ class MediaController: UITableViewController {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let json = try decoder.decode(VideoJson.self, from: data)
-                let userEvent = json.userEventVideos
-                self.videos = userEvent.rawMedia!
+                let json = try decoder.decode(SpecificEventJson.self, from: data)
+                let thisEvent = json.thisEventContent
+                self.eventData = json.thisEvent
+                self.videos = thisEvent!.rawMedia!
                 self.tableView.reloadData()
             } catch let jsonErr {
                 print("Failed to decode: ", jsonErr)

@@ -44,7 +44,7 @@ class LoginController : UIViewController, UITextFieldDelegate {
     
     func setupButton() {
         let button = UIButton(frame: CGRect(x: self.view.frame.width / 2 - 150  , y: self.view.frame.height / 2 + 30, width: 300, height: 50))
-        button.backgroundColor = FlatGreen()
+        button.backgroundColor = FlatSkyBlueDark()
         button.setTitle("Enter Glimpse", for: .normal)
         button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
         button.contentHorizontalAlignment = .center

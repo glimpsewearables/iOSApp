@@ -26,7 +26,7 @@ class YourMediaController : UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         fetchMedia()
-        setupNav()
+        setupNavBar()
         configureHeaderView()
         setupGallery()
         
@@ -36,12 +36,20 @@ class YourMediaController : UIViewController {
         return false
     }
     
-    func setupNav() {
-        let navTitle = UILabel(frame: CGRect(x:0, y:0, width:UIScreen.main.bounds.width - 32, height:70))
-        navTitle.text = eventName
-        navTitle.textColor = UIColor.white
-        navTitle.font = UIFont.boldSystemFont(ofSize: 35)
-        navigationItem.titleView = navTitle
+    func setupNavBar() {
+        self.navigationController?.navigationBar.barTintColor = FlatSkyBlueDark()
+        self.navigationController?.navigationBar.tintColor  = .white
+        navigationItem.title = eventName
+        let moreButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(handleMore))
+        navigationItem.rightBarButtonItem = moreButton
+        //let searchButton = UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(handleSearch))
+        //navigationItem.rightBarButtonItems = [moreButton, searchButton]
+    }
+    
+    let navigationLauncher = NavigationLauncher()
+    
+    @objc func handleMore() {
+        navigationLauncher.showSettings()
     }
     
     func setupGallery() {
@@ -51,7 +59,7 @@ class YourMediaController : UIViewController {
         self.galleryView?.dataSource = self
         self.galleryView?.delegate = self
         self.galleryView?.register(GalleryCell.self, forCellWithReuseIdentifier: "cell")
-        self.galleryView.backgroundColor = FlatGreen()
+        self.galleryView.backgroundColor = FlatSkyBlue()
         view.addSubview(galleryView)
     }
     
@@ -92,8 +100,8 @@ class YourMediaController : UIViewController {
             momentLabel.font = UIFont.boldSystemFont(ofSize: 25)
             momentLabel.backgroundColor = FlatGreenDark()
             //momentLabel.layer.borderWidth = 2.0
-            galleryView.addSubview(momentLabel)
-            galleryView.contentInset.top = 40
+            //galleryView.addSubview(momentLabel)
+            //galleryView.contentInset.top = 40
         }
     }
     
@@ -127,7 +135,8 @@ extension YourMediaController : UICollectionViewDataSource, UICollectionViewDele
             return cell
         } else {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath) as! GalleryCell
-            let video = videos[videos.count - 1 - indexPath.row]
+            //let video = videos[videos.count - 1 - indexPath.row]
+            let video = videos[indexPath.item]
             cell.video = video
             let videoURL = URL(string: video.link!)
             let thumbnailImage = videoURL!.createVideoThumbnail()
@@ -155,7 +164,8 @@ extension YourMediaController : UICollectionViewDataSource, UICollectionViewDele
             
         } else {
             print("User tapped on item \(indexPath.row)")
-            let selectedVideo = videos[videos.count - 1 - indexPath.row]
+            //let selectedVideo = videos[videos.count - 1 - indexPath.row]
+            let selectedVideo = videos[indexPath.row]
             let type = selectedVideo.link!.suffix(3)
             if (type == "mp4") {
             //let videoController = VideoController()

@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class EventCell : UITableViewCell {
+class CommunityCell : UITableViewCell {
     
-    var event : UserEvent?
+    var event : Event?
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -41,7 +41,7 @@ class EventCell : UITableViewCell {
             
             count.rightAnchor.constraint(equalTo: self.rightAnchor),
             count.bottomAnchor.constraint(equalTo: bottomAnchor),
-        ])
+            ])
     }
     
     func setupThumbnail() {

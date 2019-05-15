@@ -18,22 +18,38 @@ class HomeController : UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.title = "Your Events"
-        
         fetchMedia()
-        tableView.backgroundColor = FlatGreen()
+        setupNavBar()
+        tableView.backgroundColor = FlatSkyBlue()
         tableView.rowHeight = UITableView.automaticDimension
-        //tableView.estimatedRowHeight = 240
         tableView.register(EventCell.self, forCellReuseIdentifier: "cellId")
-        
-        let navTitle = UILabel(frame: CGRect(x:0, y:0, width:UIScreen.main.bounds.width - 32, height:70))
-        navTitle.text = "Your Events"
-        navTitle.textColor = UIColor.white
-        navTitle.font = UIFont.boldSystemFont(ofSize: 35)
-        navigationItem.titleView = navTitle
-        self.navigationController?.navigationBar.barTintColor  = FlatGreenDark()
+    }
+    
+    func setupNavBar() {
+        self.navigationController?.navigationBar.barTintColor = FlatSkyBlueDark()
+        self.navigationController?.navigationBar.tintColor  = .white
+        navigationItem.title = "Your Events"
+        let moreButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(handleMore))
+        navigationItem.rightBarButtonItem = moreButton
+        //let searchButton = UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(handleSearch))
+        //navigationItem.rightBarButtonItems = [moreButton, searchButton]
+    }
+    
+    let navigationLauncher = NavigationLauncher()
+    
+    
+    @objc func handleMore() {
+        navigationLauncher.userId = self.userId
+        navigationLauncher.showSettings()
+    }
+
+    
+    
+    @objc func handleSearch() {
         
     }
+    
+    
     
     override open var shouldAutorotate: Bool {
         return false
@@ -49,20 +65,9 @@ class HomeController : UITableViewController {
         cell.event = event
         cell.name.text = event.name
         cell.date.text = event.startDate
-        cell.backgroundColor = FlatGreen()
+        cell.backgroundColor = FlatSkyBlue()
         cell.count.text = "\(String(event.numVideos!)) videos"
-        //cell.textLabel?.text = event.name
-        //cell.detailTextLabel?.text = event.startDate
         cell.setupThumbnail()
-        
-//        let url = URL(string: (event.headerImage)!)
-//
-//        DispatchQueue.global().async {
-//            let data = try? Data(contentsOf: url!) //make sure your image in this url does exist, otherwise unwrap in a if let check / try-catch
-//            DispatchQueue.main.async {
-//                cell.thumbnailImageView.image = UIImage(data: data!)
-//            }
-//        }
         return cell
     }
     

@@ -11,7 +11,7 @@ import UIKit
 import ChameleonFramework
 
 
-class EventController : UITableViewController {
+class CommunityController : UITableViewController {
     
     var userId : String?
     var events = [Event]() //array of media data
@@ -22,18 +22,28 @@ class EventController : UITableViewController {
         navigationItem.title = "Events"
         
         fetchMedia()
-        tableView.backgroundColor = FlatGreen()
+        tableView.backgroundColor = FlatSkyBlue()
         tableView.rowHeight = UITableView.automaticDimension
-        //tableView.estimatedRowHeight = 240
+        self.navigationController?.navigationBar.tintColor  = .white
         tableView.register(EventCell.self, forCellReuseIdentifier: "cellId")
+        setupNavBar()
         
-        let navTitle = UILabel(frame: CGRect(x:0, y:0, width:UIScreen.main.bounds.width - 32, height:70))
-        navTitle.text = "Events"
-        navTitle.textColor = UIColor.white
-        navTitle.font = UIFont.boldSystemFont(ofSize: 35)
-        navigationItem.titleView = navTitle
-        self.navigationController?.navigationBar.barTintColor  = FlatGreenDark()
-        
+    }
+    
+    func setupNavBar() {
+        self.navigationController?.navigationBar.barTintColor = FlatSkyBlueDark()
+        self.navigationController?.navigationBar.tintColor  = .white
+        navigationItem.title = "Community Events"
+        let moreButton = UIBarButtonItem(image: UIImage(named: "menu"), style: .plain, target: self, action: #selector(handleMore))
+        navigationItem.rightBarButtonItem = moreButton
+        //let searchButton = UIBarButtonItem(image: UIImage(named: "search"), style: .plain, target: self, action: #selector(handleSearch))
+        //navigationItem.rightBarButtonItems = [moreButton, searchButton]
+    }
+    
+    let navigationLauncher = NavigationLauncher()
+    
+    @objc func handleMore() {
+        navigationLauncher.showSettings()
     }
     
     override open var shouldAutorotate: Bool {
@@ -49,11 +59,9 @@ class EventController : UITableViewController {
         let event = events[indexPath.row]
         cell.name.text = event.name
         cell.date.text = event.startDate
-        cell.backgroundColor = FlatGreen()
+        cell.backgroundColor = FlatSkyBlue()
         //cell.textLabel?.text = event.name
         //cell.detailTextLabel?.text = event.startDate
-        
-        
         let url = URL(string: (event.headerImage)!)
         cell.thumbnailImageView.image = nil
         DispatchQueue.global().async {
@@ -70,15 +78,7 @@ class EventController : UITableViewController {
     }
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedEvent = events[indexPath.row]
-       //let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-        //let destinationView = MediaCollectionView()
-//        let destinationView = FeaturedController()
-        //let destinationView = TestController()
-        
-       // let layout:UICollectionViewFlowLayout = UICollectionViewFlowLayout.init()
-        //let destinationView = FeaturedController.init(collectionViewLayout:layout )
-        //let destinationView = MediaController()
-        let destinationView = YourMediaController()
+        let destinationView = GlobalMediaController()
         
         destinationView.eventId = indexPath.row + 1
         destinationView.eventName = selectedEvent.name!
