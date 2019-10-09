@@ -125,8 +125,8 @@ extension GalleryCollectionView:  UICollectionViewDataSource, UICollectionViewDe
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         print("User tapped on item \(indexPath.row)")
         let selectedVideo = videos[indexPath.row]
-        let videoController = VideoController()
-        videoController.videoLink = selectedVideo.link
+        //let videoController = VideoController()
+        //videoController.videoLink = selectedVideo.link
         //self.navigationController?.pushViewController(videoController, animated: true)
         
     }
